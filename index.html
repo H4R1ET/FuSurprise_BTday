@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <title>Feliz Cumpleaños</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        /* Custom scrollbar for detail views if text gets too long */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1a1; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e180; 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8c5; 
+        }
+
+        /* Transition classes */
+        .view-section {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .fade-in {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .hidden-view {
+            display: none !important;
+        }
+
+        /* Borde personalizado para Zayn */
+        .borde-zayn {
+        border: 10px solid transparent; /* Grosor del borde */
+        border-image: url('ZaynBorder.jpg') 50 round; /* 30 es el corte, puedes subirlo o bajarlo si se ve muy grueso/delgado */
+        border-radius: 0; /* Quitamos el redondeo normal para que la imagen tome el control */
+        }
+
+        .borde-lyra {
+        /* 1. GROSOR VISUAL: Define qué tan grueso será el espacio del borde en el botón */
+        border: 10px solid transparent; 
+    
+        /* 2. CORTE Y REPETICIÓN: 
+            - '15' es el "slice" (corte). Define cuántos píxeles toma de las orillas de la imagen original.
+            - 'round' le dice a CSS que multiplique (repita) la imagen entera para llenar el borde, ajustando el tamaño para que no queden recortes a la mitad. */
+        border-image: url('LyraBorder2.png') 15 round;
+    
+        border-radius: 0;
+        }
+
+        /* Borde pixelado personalizado para Suzy */
+        .borde-pixel-suzy {
+        position: relative;
+        background-color: transparent;
+        border: 4px solid transparent; 
+        }
+
+        /* Lados superior e inferior */
+        .borde-pixel-suzy::before {
+        content: '';
+        position: absolute;
+        top: -4px; bottom: -4px; 
+        left: 0; right: 0;
+        border-top: 4px solid #DC143C; /* Color carmesí */
+        border-bottom: 4px solid #DC143C;
+        pointer-events: none;
+        }
+
+        /* Lados izquierdo y derecho */
+        .borde-pixel-suzy::after {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0; 
+        left: -4px; right: -4px;
+        border-left: 4px solid #DC143C; /* Color carmesí */
+        border-right: 4px solid #DC143C;
+        pointer-events: none;
+        }
+
+    </style>
+</head>
+<body class="min-h-screen relative flex items-center justify-center p-4 sm:p-8">
+    
+    <!-- Background Image with Blur -->
+    <!-- You can replace the src url with a picture of your group of friends -->
+    <div class="fixed inset-0 z-0">
+        <img src="FondoVentana.jpg" 
+             alt="Background" 
+             class="w-full h-full object-cover" />
+        <!-- Blur Overlay -->
+        <div class="absolute inset-0 bg-black/20 backdrop-blur-md"></div>
+    </div>
+
+    <!-- Main Card Container -->
+    <div class="relative z-10 w-full max-w-lg bg-white rounded-xl shadow-2xl overflow-hidden min-h-[700px] flex flex-col">
+        
+        <!-- ================= MAIN VIEW ================= -->
+        <div id="view-main" class="view-section flex flex-col h-full fade-in">
+            
+            <!-- Profile Header -->
+            <div class="p-8 pb-6 flex items-center gap-6 border-b border-gray-100">
+                <!-- Profile Image (Replace src with your friend's photo) -->
+                <div class="shrink-0">
+                    <img src="FurroPic.png" 
+                         alt="Cumpleañero" 
+                         class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover shadow-sm">
+                </div>
+                <!-- Profile Info -->
+                <div>
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 tracking-tight text-teal-600">¡Feliz Cum-ple!</h1>
+                    <p class="text-gray-500 mt-2 text-sm sm:text-base leading-relaxed">
+                        TQM furro, aqui tenemos algo especial para ti, sisisisis.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Friend Buttons List -->
+            <div class="p-8 flex-grow flex flex-col gap-4">
+                
+                <!-- Button 1: Suzy -->
+                <button onclick="openLetter('letter-1')" class="borde-pixel-suzy group w-full text-[#DC143C] py-3 px-5 mt-1 mb-1 flex justify-between items-center transition-all duration-200 hover:bg-[#DC143C]/10 focus:outline-none">
+                    <span class="font-medium text-lg">Suzy's Folder</span>
+                    <i class="ph ph-caret-right text-xl group-hover:translate-x-1 transition-transform"></i>
+                </button>
+
+                <!-- Button 2: zayn  -->
+                <button onclick="openLetter('letter-2')" class="borde-zayn group w-full text-black bg-transparent py-3 px-5 flex justify-between items-center transition-all duration-200 hover:bg-gray-100 focus:outline-none">
+                    <span class="font-medium text-lg">༒︎   𝖅ayn's 𝕱older  ﾒ</span>
+                    <i class="ph ph-caret-right text-xl group-hover:translate-x-1 transition-transform"></i>
+                </button>
+
+                <!-- Button 3: Beige . Hariet -->
+                <button onclick="openLetter('letter-3')" class="group w-full border-2 border-[#633F33] text-[#633F33] rounded-lg py-3 px-5 flex justify-between items-center transition-all duration-200 hover:bg-[#633F33]/10 focus:outline-none focus:ring-2 focus:ring-[#633F33]/40">
+                    <span class="font-medium text-lg">𝙷𝚊𝚛𝚒𝚎𝚝'𝚜 𝙵𝚘𝚕𝚍𝚎𝚛</span>
+                    <i class="ph ph-caret-right text-xl group-hover:translate-x-1 transition-transform"></i>
+                </button>
+
+                <!-- Button 4: mel -->
+                <button onclick="openLetter('letter-4')" class="group w-full border-2 border-purple-400 text-purple-500 rounded-lg py-3 px-5 flex justify-between items-center transition-all duration-200 hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-purple-200">
+                    <span class="font-medium text-lg">Mel's Folder</span>
+                    <i class="ph ph-caret-right text-xl group-hover:translate-x-1 transition-transform"></i>
+                </button>
+
+                <!-- Button 5: Pink - Lyra -->
+                <button onclick="openLetter('letter-5')" class="borde-lyra group w-full border-2 border-pink-400 text-pink-500 rounded-lg py-3 px-5 flex justify-between items-center transition-all duration-200 hover:bg-pink-50 focus:outline-none">
+                    <span class="font-medium text-lg">𓏵‧₊˚ ┊ 𝓛yra 𝓕older</span>
+                    <i class="ph ph-caret-right text-xl group-hover:translate-x-1 transition-transform"></i>
+                </button>
+
+                <!-- Button 7: Jafet -->
+                <button onclick="openLetter('letter-7')" class="group w-full border-2 border-[#000080] text-[#000080] rounded-lg py-3 px-5 flex justify-between items-center transition-all duration-200 hover:bg-[#000080]/10 focus:outline-none focus:ring-2 focus:ring-[#000080]/40">
+                    <span class="font-medium text-lg">Jafet's Folder</span>
+                    <i class="ph ph-caret-right text-xl group-hover:translate-x-1 transition-transform"></i>
+                </button>
+
+                <!-- Button 8: Erick -->
+                <button onclick="openLetter('letter-8')" class="group w-full border-2 border-teal-400 text-teal-500 rounded-lg py-3 px-5 flex justify-between items-center transition-all duration-200 hover:bg-teal-50 focus:outline-none focus:ring-2 focus:ring-teal-200">
+                    <span class="font-medium text-lg">Erick's Folder</span>
+                    <i class="ph ph-caret-right text-xl group-hover:translate-x-1 transition-transform"></i>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- ================= DETAIL VIEWS ================= -->
+        
+        <!-- Letter 1 SUZY  -->
+        <div id="letter-1" class="view-section absolute inset-0 bg-white flex flex-col hidden-view fade-out">
+            <div class="p-8 pb-4 border-b border-gray-100 flex-shrink-0">
+                <button onclick="goBack()" class="border-2 border-red-400 text-red-500 hover:bg-red-50 rounded-lg py-2 px-4 flex items-center gap-2 transition-colors focus:outline-none">
+                    <i class="ph ph-caret-left font-bold"></i>
+                    <span class="font-medium">Regresar</span>
+                </button>
+            </div>
+            <div class="p-8 overflow-y-auto custom-scrollbar flex-grow">
+                <h2 class="text-2xl font-bold text-red-500 mb-6">Suzy's File</h2>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>¡FELI CUM AAHHHHHH !</p>
+                    <p>Tus cualidades: Tu compañerismo</p>
+                    <p>Tus fortalezas: Tu resiliencia</p> 
+                    <p>Un recuerdo: Cuando el semáforo del repo te mató dos veces</p>
+                    <p>Algo que admiramos: Tu preocupación por cada uno de nosotros</p>
+                    <p>Algo que nos hace reír: Las tonterías que hacés cuando prendés cam.</p>
+                    <p>Algo que te hace único: Tu pasividad</p>
+                    <p>Algo que aprendimos de ti: A respetarnos a nosotros mismos.</p>
+                    <p>Una frase que te representa: La mea vola hermano.</p>
+                    <p>Un momento especial: Cuando te uniste por primera vez al vc</p> 
+                    <p>Una cosa que esperamos que nunca cambies: Tu hermosa energía</p>
+                    <p>Algo que queremos verte lograr: Tener libertad para ser la mejor versión de Thomas posible</p>
+                    <p>Una recomendación para tus 20: Que tu edad no defina tu persona.</p>
+                    <p>Una canción que te dedicaríamos: Friends de BTS</p>
+                    <p>Un personaje que nos recuerda a ti: Boris JSJSJSJ</p>
+                    <p>Un lugar donde te imaginamos: en Linares con tu abu</p>
+                    <p>Una palabra que te describe: Lazo</p>
+                    <p>Una predicción para tu año: Vas a lograr las cosas que te propongas</p>
+                    <p>Un deseo para ti: Que puedas ser un joven sin restricciones </p>
+                    <p>Un agradecimiento: Gracias por escuchar cada palabra mía sin rechistar.</p>
+                    <p>Un mensaje final de cumpleaños</p>
+                    </p>
+                    <img src = "SuzyCard.jpeg">
+                    <p>"Espero que jamás dejes de dar esos abrazos tan cálidos que nos arropan a todos, porque a pesar de vivir lejos, tus acciones y palabras nos hacen sentir en paz. Todos deberían poder tener un amigo como vos, tan capaz y fuerte, tan gracioso y alegre, tan humano como nadie. Espero que podamos seguir hablando durante mucho tiempo amigo, te adoro demasiado ❤️ Feliz cumpleaños" - Suzy</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Letter 2 ZAYN  -->
+        <div id="letter-2" class="view-section absolute inset-0 bg-white flex flex-col hidden-view fade-out">
+            <div class="p-8 pb-4 border-b border-gray-100 flex-shrink-0">
+                <button onclick="goBack()" class="border-2 border-black-400 text-black-500 hover:bg-black-50 rounded-lg py-2 px-4 flex items-center gap-2 transition-colors focus:outline-none">
+                    <i class="ph ph-caret-left font-bold"></i>
+                    <span class="font-medium">Regresar</span>
+                </button>
+            </div>
+            <div class="p-8 overflow-y-auto custom-scrollbar flex-grow">
+                <h2 class="text-2xl font-bold text-black-500 mb-6">ﾒ   𝖅ayn's 𝕱ile</h2>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>¡FELI CUM AAHHHHHH!</p>
+                    <img src = "ZaynCard.jpg">
+                    <img src = "ZaynCard2.jpg">
+                    <img src = "ZaynCard3.jpg">
+                    <img src = "ZaynCard4.jpg">
+                    <img src = "ZaynCard5.jpg">
+                    <img src = "ZaynCard6.jpg">
+                    <img src = "ZaynCard7.jpg">
+                    <img src = "ZaynCard8.jpg">
+                </div>
+            </div>
+        </div>
+
+        <!-- Letter 3 HARIET  -->
+        <div id="letter-3" class="view-section absolute inset-0 bg-white flex flex-col hidden-view fade-out">
+            <div class="p-8 pb-4 border-b border-gray-100 flex-shrink-0">
+                <button onclick="goBack()" class="border-2 border-[#633F33] text-[#633F33] hover:bg-[#633F33] rounded-lg py-2 px-4 flex items-center gap-2 transition-colors focus:outline-none">
+                    <i class="ph ph-caret-left font-bold"></i>
+                    <span class="font-medium">Regresar</span>
+                </button>
+            </div>
+            <div class="p-8 overflow-y-auto custom-scrollbar flex-grow">
+                <h2 class="text-2xl font-bold text-[#633F33] mb-6">𝙷𝚊𝚛𝚒𝚎𝚝'𝚜 𝙵𝚒𝚕𝚎</h2>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>¡FELI CUM AAHHHHHH !</p>
+                    <p>¡Alooo fuuuuuuuuuuuu! 💥
+                    Mi mucaco, weeeenaaaaaaaaas -
+                    ¡Feliz CUM-PLEANIOOOOOS! -
+                    Ahhhh, NOWAY
+                    </p>
+                    <p>Se que tal vez no hablo mucho contigo muchacho, suelo estar a veces ahí, ya sabes ocupado 😔🔫, peeeero, aún así, tu cualidad más especial es tu increíble paciencia, usted muchacho es súper paciente, pero también si alguien colma o inrrupe en tu paciencia lo harás notar y es súper clave, hay un balance, hay un equilibrio:
+                    "OHMMM no voy a caer en el RAGEBAIT, Ohmmm"</p>
+                    <p>Otra cosa muy goood de usted mucaco, es que es tremendo insano, pues es que eres resiliente, es clave como Perú, por qué es prácticamente tu fortaleza, apesar de las circunstancias y que todo esté totalmente encontra o no sea sencillo, ahí estás muchacho, peleando y enfrentando. Y aunque de miedo o mucha incertidumbre, ahí estás tanqueando brutalmente y no te rindes, sin duda alguna, eso es top insano papupro.</p>
+                    <p>Aún recuerdo la primera que vez que te conocí muchacho, un usuario del discord interesado en buscar a alguien con quién jugar, hasta que poco a poco, llamada tras llamada te vi presente en cada momento, entre ellos, las tremendas desveladas super insanas que eran super tarde y eso que en el horario en el que estas que para las horas a las que nos quedábamos eran dignas de un imsomio atroz. Ahí estabas, escuchando, aportando tu opinión y tú punto, invitando a jugar y si no se podía, transmitiendo lo que haces por qué es tremendo, algo que podía tener de fondo mientras yo hacía tarea, super top muchacho 🗣️.</p>
+                    <p>Admiro mucho tu humor, es que es clave como Perú mucaco, cuando me di cuenta que podía hacer chistes absurdisimos y fue de contexto y que podrías entenderlos... Pff, humor avanzado, le sabes mucaco, me recuerda a esas llamadas en la madruga donde definitivamente ya habíamos quedamos suficientes neuronas</p>
+                    <p>Me hace reír que sigas la broma, que incluso puedas hacer todavía más gracioso el chiste, nanana es súper insano, yo de plano, la paso muy bien, super chill super excelente pero, cuando hago un chistesito y sigues la broma o la referencia, es algo que me hace reír, genuinamente.</p>
+                    <p>Eres único muchacho, de todo el grupo, su apodo apenas tiene 2 letras, "Fu" JAJAJSHD no lo pensamos mucho, era para no decir furro lo cual ya ni recuerdo por qué era, pero es que "Fu" suena bieeeen, sumándole todas las características anteriores, te hace especial, te convierte en alguien sublime, la magia de la proyectada muchacho 🗣️ </p>
+                    <p>Yo, por mi parte, aprendí algo de ti, la compañía, lo importante que es - OMAIGOD - usted es el ejemplo a seguir de lo que es acompañar, en cada llamada, podían ser en la tarde, noche o madrugada, ahí estabas muchacho, acompañando, podías estar ahí jugando algo pero siempre acompañando a alguien del grupo, y eso, eso es digno de GANADOR</p>
+                    <p>Sueles, de ves en cuando escribir una expresión que es "mish" yo no sabía que era eso, tipo, "¿Huh 🫪?" Investigando me di cuenta que es una expresión chilena que indica asombro, "¡Mish!" Algo así, incluso diferentes formas en como escribes que se me quedaron grabadas como el "hno" - que según yo es una abreviatura de "hermano" 💥 WAAAAT, OMAIGOD, que manera más interesante de abreviar, que Increidebol</p>
+                    <p>Un momento especial así siempre han sido las llamadas nocturnas desveladas, es que yo, definitivamente me quedaba más tiempo ahí solamente por qué no podía dormir, y estabas ahí, es más, hasta tienes un sticker el cual me da mucha risa y siempre me recuerda a ello, es súper clave.</p>
+                    <p>Genuinamente espero que nunca cambies en tus intereses, en ocasiones recuerdo verte estudiar, y aunque solía distraerte la llamada, podías seguir haciendo tus pendientes, actualmente quizás no estés tan presente, quizas ya no estemos en llamada muy seguido, pero en mi caso, lo entiendo completamente y mientras todo lo puedas tener controlado está súper bien, tienes la capacidad, yo confío muchacho, usted es Albert Einstein 🗣️💥</p>
+                    <p>Por eso mismo, me emociona que puedas complir tus metas muchacho, usted tiene la paciencia, el enfoque y la organización aunque sienta todo lo contrario. Usted es resiliente y es tremendo insano ganador, yo confío plenamente en sus capacidades y por eso, cuenta con mi apoyo mucaco sisisisi.</p>
+                    <p>No soy quien para darte consejos de los 20s, por qué yo aunque los cumpli antes, pues, tengo mis pedillos, mis confusiones y cosas que recién estoy entendiendo, pero si te puedo decir que es muy probable que sientas una cierta prisa, como que el tiempo se te acabó o que quizás estás muy atrás y ya llegaste tarde. Tranqui, relax mucaco, no vas llegando no tarde ni tampoco te sabotees, todavía queda mucho tiempo y puedes dedicarlo en aquello que te gusta o que necesitas hacer, tranqui, no pasa nada, aún tienes tiempo 🙏🫂.</p>
+                    <p>Una canción que te dedicaría por ser insano es "ALIOLI - MILO J" es que, me proyecto y yo que te podrías proyectar</p>
+                    <p>Es que es innegable que "Boris" de MOTM es el personaje que mas aires da de ti, indudable </p>
+                    <p>Yo te imagino, en... probablemente un lugar tranquilo, espero que tenga lo que más deseas, con lo que necesites, podría ser quizás compartido, pero yo de que eventualmente podría pasar sisisi.</p>
+                    <p>Perfectamente la palabra "Insano" te describe, es que yo sé que si</p>
+                    <p>Y como el vidente de 5 pesos que soy, yo predigo que en un futuro, nos vamos a ver, sisisis, yo lo sé, es que tiene que acontecer, predigo que podrás salir y destacar, podrás crecer y llegar tan lejos como no te lo imaginas, va a pasar créeme, claro que sis.</p>
+                    <p>Deseo plenamente que puedas complir todo lo que te propongas, que entres en acción y que sin que nada te detenga puedas llegar al peak por qué el que persevera alcanza. Fu is the real pro</p>
+                    <p>Agradezco mucho tu compañía, tu solidaridad, tu empatía y tu forma de ser tan increíble y good 💥</p>
+                    <p>Y como mensaje final: mucaco, que nada te detenga, que tú puedes, ohh claro que sí.
+                    Todo esto que está aquí es la evidencia de que nunca estarás solo, disfruta de este día tan especial para ti, con mucho cariño y aprecio - Hariet Moon 🌙</p>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Letter 4 MEL  -->
+        <div id="letter-4" class="view-section absolute inset-0 bg-white flex flex-col hidden-view fade-out">
+            <div class="p-8 pb-4 border-b border-gray-100 flex-shrink-0">
+                <button onclick="goBack()" class="border-2 border-purple-400 text-purple-500 hover:bg-purple-50 rounded-lg py-2 px-4 flex items-center gap-2 transition-colors focus:outline-none">
+                    <i class="ph ph-caret-left font-bold"></i>
+                    <span class="font-medium">Regresar</span>
+                </button>
+            </div>
+            <div class="p-8 overflow-y-auto custom-scrollbar flex-grow">
+                <h2 class="text-2xl font-bold text-purple-500 mb-6">Mel's FIle</h2>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>¡FELI CUM AAHHHHHH !!</p>
+                    <p>𝗧𝘂𝘀 𝗰𝘂𝗮𝗹𝗶𝗱𝗮𝗱𝗲𝘀 (𝘂𝗻𝗼 𝘅 𝗰𝗮𝗱𝗮 𝘂𝗻𝗼)
+                    ・Muy divertido</p>
+                    <p>𝗧𝘂𝘀 𝗳𝗼𝗿𝘁𝗮𝗹𝗲𝘇𝗮𝘀 (𝘂𝗻𝗼 𝘅 𝗰𝗮𝗱𝗮 𝘂𝗻𝗼)
+                    ・Inquebrantable</p>
+                    <p>𝗨𝗻 𝗿𝗲𝗰𝘂𝗲𝗿𝗱𝗼
+                    ・Cuando jugué roblox contigo y karma malvado aunq seguro no se acuerden 💜</p>
+                    <p>𝗔𝗹𝗴𝗼 𝗾𝘂𝗲 𝗮𝗱𝗺𝗶𝗿𝗮𝗺𝗼𝘀
+                    ・Que a pesar de todo lo que pasas en tu vida personal siempre intentas estar pendiente de nosotros y nos saludas 😔💖</p>
+                    <p>𝗔𝗹𝗴𝗼 𝗾𝘂𝗲 𝗻𝗼𝘀 𝗵𝗮𝗰𝗲 𝗿𝗲í𝗿
+                    ・Cuando habla muy Chileno y no entiendo pero amo 🤍</p>
+                    <p>𝗔𝗹𝗴𝗼 𝗾𝘂𝗲 𝘁𝗲 𝗵𝗮𝗰𝗲 ú𝗻𝗶𝗰𝗼
+                    ・Tu personalidad y gustos :3</p>
+                    <p>𝗔𝗹𝗴𝗼 𝗾𝘂𝗲 𝗮𝗽𝗿𝗲𝗻𝗱𝗶𝗺𝗼𝘀 𝗱𝗲 𝘁𝗶
+                    ・Aprendí de tí que siempre hay personas a las que le importas sin importar lo demás</p>
+                    <p>𝗨𝗻𝗮 𝗳𝗿𝗮𝘀𝗲 𝗾𝘂𝗲 𝘁𝗲 𝗿𝗲𝗽𝗿𝗲𝘀𝗲𝗻𝘁𝗮
+                    ・Cuando dices "weon/contechumare/aweonao" JAJAJAJA amo</p>
+                    <p>𝗨𝗻𝗮 𝗰𝗼𝘀𝗮 𝗾𝘂𝗲 𝗲𝘀𝗽𝗲𝗿𝗮𝗺𝗼𝘀 𝗾𝘂𝗲 𝗻𝘂𝗻𝗰𝗮 𝗰𝗮𝗺𝗯𝗶𝗲𝘀
+                    ・Realmente tu forma de expresarte y ser de amable con las personas :')</p>
+                    <p>𝗔𝗹𝗴𝗼 𝗾𝘂𝗲 𝗾𝘂𝗲𝗿𝗲𝗺𝗼𝘀 𝘃𝗲𝗿𝘁𝗲 𝗹𝗼𝗴𝗿𝗮𝗿
+                    ・Neta quiero que logres tus sueños y puedas vivir en paz y feliz 💕</p>
+                    <p>𝗨𝗻𝗮 𝗰𝗮𝗻𝗰𝗶ó𝗻 𝗾𝘂𝗲 𝘁𝗲 𝗱𝗲𝗱𝗶𝗰𝗮𝗿í𝗮𝗺𝗼𝘀
+                    ・Lobo-hombre en París = La Unión (Me recuerda a tí JAJSJDKS y es un temazo)</p>
+                    <p>𝗨𝗻 𝗽𝗲𝗿𝘀𝗼𝗻𝗮𝗷𝗲 𝗾𝘂𝗲 𝗻𝗼𝘀 𝗿𝗲𝗰𝘂𝗲𝗿𝗱𝗮 𝗮 𝘁𝗶
+                    ・Óscar obviooooo y Kaufmo chileno 🗣🗣</p>
+                    <p>𝗨𝗻 𝗹𝘂𝗴𝗮𝗿 𝗱𝗼𝗻𝗱𝗲 𝘁𝗲 𝗶𝗺𝗮𝗴𝗶𝗻𝗮𝗺𝗼𝘀
+                    ・En París 😘</p>
+                    <p>𝗨𝗻𝗮 𝗽𝗮𝗹𝗮𝗯𝗿𝗮 𝗾𝘂𝗲 𝘁𝗲 𝗱𝗲𝘀𝗰𝗿𝗶𝗯𝗲
+                    ・Lindo</p>
+                    <p>𝗨𝗻𝗮 𝗽𝗿𝗲𝗱𝗶𝗰𝗰𝗶ó𝗻 𝗽𝗮𝗿𝗮 𝘁𝘂 𝗮ñ𝗼
+                    ・Va a mejorar, yo lo sé 💕</p>
+                    <p>𝗨𝗻 𝗮𝗴𝗿𝗮𝗱𝗲𝗰𝗶𝗺𝗶𝗲𝗻𝘁𝗼
+                    ・Realmente agradezco mucho tu amistad Fu, la forma en que nos aprecias y siempre estás ahí, y aunque probablemente tú tengas tus propios problemas eso no te impide querer aconsejarnos y leernos</p>
+                    <p>Un mensaje final de cumpleaños
+                    ・Eres un chico increíble, lindo, divertido, inteligente y muy cariño, de vdd no dejes que cosas externas te bajoneen y aunq sea difícil no te rindas, que el futuro es prometedor y brillante, te adoramos Fu <3</p>
+                    <img src = "MelCard.jpeg">
+                </div>
+            </div>
+        </div>
+
+        <!-- Letter 5 LYRA -->
+        <div id="letter-5" class="view-section absolute inset-0 bg-white flex flex-col hidden-view fade-out">
+            <div class="p-8 pb-4 border-b border-gray-100 flex-shrink-0">
+                <button onclick="goBack()" class="border-2 border-pink-400 text-pink-500 hover:bg-pink-50 rounded-lg py-2 px-4 flex items-center gap-2 transition-colors focus:outline-none">
+                    <i class="ph ph-caret-left font-bold"></i>
+                    <span class="font-medium">Regresar</span>
+                </button>
+            </div>
+            <div class="p-8 overflow-y-auto custom-scrollbar flex-grow">
+                <h2 class="text-2xl font-bold text-pink-500 mb-6">𓏵‧₊˚ ┊ 𝓛yra's 𝓕ile</h2>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>¡FELI CUM AAHHHHHH !!</p>
+                    <p>✦ Tus cualidades - La habilidad de hacernos reír incluso en los momentos más inesperados</p>
+                    <p>✦ Tus fortalezas - Tu resiliencia, tu fuerza y esa capacidad de seguir adelante incluso cuando las cosas se ponen difíciles</p>
+                    <p>✦ Un recuerdo - Cuando te probaste la ropa de la botarga de Minnie 🥺</p>
+                    <p>✦ Algo que admiramos - Tu resiliencia y tu fuerza para seguir adelante ugu</p>
+                    <p>✦ Algo que nos hace reír - Tus bailesitos DJAJKSA</p>
+                    <p>✦ Algo que te hace único - Tu forma de ser, simplementeeso</p>
+                    <p>✦ Algo que aprendimos de ti - Aprendí a no prender cam JISJAKJSA...BAITTT. Aprendí que todos tenemos nuestras propias dolencias y dificultades a lo largo de la vida, pero tú eres una prueba de que, a pesar de todo eso, merecemos reír y seguir adelante. Merecemos darnos más oportunidades, porque cada día es una nueva oportunidad 🍓 _Me alegra que, a pesar de todo, la paz llegue a mí cuando ustedes entran en mi día a día_</p>
+                    <p>✦ Una frase que te representa - "wn qliao" KJASKAS 🇨🇱</p>
+                    <p>✦ Un momento especial - Cuando nos quedamos hasta tarde conversando sobre nuestras jocherias </p>
+                    <p>✦ Una cosa que esperamos que nunca cambies - Tu forma de sonreírle a la vida hno</p>
+                    <p>✦ Algo que queremos verte lograr - Todas tus metas y sueños. Queremos verte conseguir todo aquello que mereces y que algún día puedas mirar atrás y sentirte orgulloso de todo lo que lograste wiwiwi</p>
+                    <p>✦ Una recomendación para tus 20 - Ahora que tu edad tendrá un 2 por los próximos diez años JAAAAJAJA NUV, solo puedo decirte que sigas enfrentando la vida con ese brillo interior que tienes e irradias. No dejes que nadie lo apague y nunca te rindas ante las adversidades. Todavía tienes muchísimo por vivir, descubrir y construir amiwito</p>
+                    <p>✦ Una canción que te dedicaríamos - “Open Arms” — Epic: The Musical</p>
+                    <p>✦ Un personaje que nos recuerda a ti - Boris, Kaufmo y, aunque técnicamente no es un personaje... los mapaches hno.... y me recuerdas mucho al Odiseo de Ximena Natzel, es decir, en su diseño de odiseo jejejej</p>
+                    <p>✦ Un lugar donde te imaginamos - En un restaurante con luz cálida, de noche, probando comida peruana sikesi NO SÉ PORQUE PERO CON UNA BANDERILLA CHILENA o algo ref a Chile</p>
+                    <p>✦ Una palabra que te describe: Valeroso</p>
+                    <p>✦ Una predicción para tu año: Vas a salir embarazado (BAITTT) Que tus 20 vengan llenos de cariño, nuevas experiencias y momentos bonitos. Tal vez algunos días sean difíciles, pero eres mucho más capaz de lo que crees papu</p>
+                    <p>✦ Un deseo para ti: Que tengas siempre la libertad de decidir qué es bueno para ti y que sigas teniendo esa fuerza y ese valor que tanto te caracterizan sikesi</p>
+                    <p>✦ Un agradecimiento - Gracias por estar siempre ahí para escucharnos, por sacarnos una sonrisa con tus ocurrencias, por ser alguien tan especial y por haberte convertido en una persona que se hace querer tanto</p>
+                    <img src = "LyraCard.jpeg">
+                </div>
+            </div>
+        </div>
+
+        <!-- Letter 7 JAFET (Blue) -->
+        <div id="letter-7" class="view-section absolute inset-0 bg-white flex flex-col hidden-view fade-out">
+            <div class="p-8 pb-4 border-b border-gray-100 flex-shrink-0">
+                <button onclick="goBack()" class="border-2 border-blue-400 text-blue-500 hover:bg-blue-50 rounded-lg py-2 px-4 flex items-center gap-2 transition-colors focus:outline-none">
+                    <i class="ph ph-caret-left font-bold"></i>
+                    <span class="font-medium">Regresar</span>
+                </button>
+            </div>
+            <div class="p-8 overflow-y-auto custom-scrollbar flex-grow">
+                <h2 class="text-2xl font-bold text-blue-500 mb-6">Jafet's File</h2>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>¡FELI CUM AAHHHHHH !</p>
+                    <p>Tus cualidades: ERES GUAPO, GUAPÍSIMO BRO, además de guapo chistoso, carismático y además de buenos gustos, mira todo lo que es ese combo grrrr</p>
+                    <p>Tus fortalezas: Se me hace simplemente increíble que a pesar de todas las dificultades que haz vivido y vives a lo largo de tu vida y en lugares como tú propia casa o incluso cosas que sientes contigo mismo, siempre sales adelante y además siempre como el tipazo que eres, sin perder ni tu esencia ni tu brillo, genuinamente te admiro mucho y además de corazón espero que mejores siempre.</p>
+                    <p>Un recuerdo: Inolvidable cuando jugamos fortnite y la manquee terrible, también cuando te decía cosas cuando prendias camara y te ponías bien uwu JAJAJAJAJAJ, era muy divertido </p>
+                    <p>Algo que admiramos: Creo que ya lo dije antes pero no está de más que siga diciendo cuánto admiro la fuerza mental y la madurez que posees, aunque nadie es irrompible y espero que aguantes lo suficiente para superar todo lo que ahora mismo afrontas.</p>
+                    <p>Algo que nos hace reír: Cuando prendes camara y te pones a hacer cosas random JAJAJAJ, Es el pinaculo de la comedia</p>
+                    <p>Algo que te hace único: Definitivamente ese acento chileno es algo a lo que asocio perfectamente a ti JAJAJAAJ, y es muy ICONICO tuyo a decir verdad, nunca lo cambies porfa</p>
+                    <p>Algo que aprendimos de ti: Nunca estoy solo, siempre llegarán personas mejores y los malos momentos son solo eso: momentos, al lado de las personas correctas todo mejorara</p>
+                    <p>Una frase que te representa': "Oe po la raja wn culiao" JAJAJAJAJ NO SE POR QUE TE ESCUCHE UNA VEZ DECIR ESO PERO INCLUSO SE ME LLEGO A PEGAR, INEVITABLE NO PENSAR EN TI</p>
+                    <p>Un momento especial: Recuerdo con mucho cariño una vez en la que me consolaste cuando supiste la situación por la que estaba pasando, y a decir verdad me consoló mucho y lo sigo apreciando a son de hoy</p>
+                    <p>Una cosa que esperamos que nunca cambies: Nunca cambies tu forma de ser, eres una persona muy empática y gentil, y de ese tipo de personas quedan muy pocas, me alegra que seas una de ellas.</p>
+                    <p>Algo que queremos verte lograr: LLEGA A CHAMPION EN EL LOL MI CAMPEÓN QUE SE CUANTO TE GUSTA</p>
+                    <p>Una recomendación para tus 20: Yo sé que sería difícil, pero </p>
+                    <p>Una canción que te dedicaríamos: Hug me - Pharrell Williams :D</p>
+                    <p>Un personaje que nos recuerda a ti: Definitivamente Boris de Myth of the machine, es inevitable JAJAJA</p>
+                    <p>Un lugar donde te imaginamos: De tanto verte de regreso a tu casa caminando, la verdad es inevitable no imaginarte caminando por una acera o cesped</p>
+                    <p>Una palabra que te describe: "Furro" JAJAJAJJJDDJJSJDJBB </p>
+                    <p>Una predicción para tu año: Todo va a mejorar, y seguirás siendo el mismo tipo de persona que todos queremos y apreciamos con nuestro corazón, cuentas con cada uno de nosotros para apoyarte.</p>
+                    <p>Un deseo para ti: Espero que puedas ser más libre fu, hacer las cosas que te gustan sin restricciones y tus problemas, además de que la relación con los que te rodean se incremente y se haga fuerte cada día más.</p>
+                    <p>Un agradecimiento: Gracias por acompañarme, gracias por ser como eres, gracias por hacernos reír a todos, realmente eres el corazón de este grupo, nunca cambies.</p>
+                    <p>Un mensaje final de cumpleaños: Pásala bien, espero de todo corazón que nunca cambies, eres perfecto tal y como eres, tendrás fortalezas y defectos como todos los seres humanos pero en cada una de ellas está en tu esencia y espero que así persista hasta que el mundo se acabe, que cumplas 729282292 años más fu, eres el mejor chileno que existe JAJAJAJA, Jafet te quiere mucho ❤️</p>
+                    <img src = "JafetCard.png">
+                </div>
+            </div>
+        </div>
+
+        <!-- Letter 8 ERICK (Blue) -->
+        <div id="letter-8" class="view-section absolute inset-0 bg-white flex flex-col hidden-view fade-out">
+            <div class="p-8 pb-4 border-b border-gray-100 flex-shrink-0">
+                <button onclick="goBack()" class="border-2 border-blue-400 text-blue-500 hover:bg-blue-50 rounded-lg py-2 px-4 flex items-center gap-2 transition-colors focus:outline-none">
+                    <i class="ph ph-caret-left font-bold"></i>
+                    <span class="font-medium">Regresar</span>
+                </button>
+            </div>
+            <div class="p-8 overflow-y-auto custom-scrollbar flex-grow">
+                <h2 class="text-2xl font-bold text-blue-500 mb-6">Erick's File</h2>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>¡FELI CUM AAHHHHHH !</p>
+                    <p>Tus cualidades: tu bondad</p>
+                    <p>Tus fortalezas: tu perseverancia </p>
+                    <p>Un recuerdo: la primera vez que hablamos como amigos por el "PORQUE TU PARECE UNA ÑEMA?!"</p>
+                    <p>Algo que admiramos: como apesar de que aveces las cosas estan en tu contra jamas te dejas vencer</p>
+                    <p>Algo que nos hace reír: cuando te pusiste el traje de minie </p>
+                    <p>Algo que te hace único: tu sentido del humor tan unico</p>
+                    <p>Algo que aprendimos de ti: jamas darnos por vencidos</p>
+                    <p>Una frase que te representa: aaaaa ctm</p>
+                    <p>Un momento especial: cuando estabamos en llamada viendote jugar el mod de cuphead imposible</p>
+                    <p>Una cosa que esperamos que nunca cambies: lo brillanete de tu alma</p>
+                    <p>Una recomendación para tus 20: que la edad no te amargue jamas el humor</p>
+                    <p>Una canción que te dedicaríamos: Amigo triste-cherri</p>
+                    <p>Un personaje que nos recuerda a ti: Boris</p>
+                    <p>Un lugar donde te imaginamos: manicomio</p>
+                    <p>Una palabra que te describe: Inspirador</p>
+                    <p>Una predicción para tu año: vas a dejar el lol</p>
+                    <p>Un deseo para ti: que tu año este lleno de felicidad y exitos</p>
+                    <p>Un agradecimiento: por aceptarme en el grupo tan rapido y confiar en mi</p>
+                    <img src = "ErickCard.jpeg">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Track the currently active view
+        let currentActiveLetter = null;
+        
+        const mainView = document.getElementById('view-main');
+        const transitionDuration = 300; // Match this with CSS transition duration (0.3s)
+
+        function openLetter(letterId) {
+            const letterView = document.getElementById(letterId);
+            if (!letterView) return;
+
+            // 1. Fade out main view
+            mainView.classList.remove('fade-in');
+            mainView.classList.add('fade-out');
+
+            // 2. Wait for fade out, then hide main and show letter
+            setTimeout(() => {
+                mainView.classList.add('hidden-view');
+                
+                // Prepare letter view
+                letterView.classList.remove('hidden-view');
+                
+                // Trigger reflow to ensure the fade-in transition happens
+                void letterView.offsetWidth; 
+                
+                // Fade in letter view
+                letterView.classList.remove('fade-out');
+                letterView.classList.add('fade-in');
+                
+                currentActiveLetter = letterView;
+            }, transitionDuration);
+        }
+
+        function goBack() {
+            if (!currentActiveLetter) return;
+
+            // 1. Fade out the current letter
+            currentActiveLetter.classList.remove('fade-in');
+            currentActiveLetter.classList.add('fade-out');
+
+            // 2. Wait for fade out, then hide letter and show main
+            setTimeout(() => {
+                currentActiveLetter.classList.add('hidden-view');
+                currentActiveLetter = null;
+                
+                // Prepare main view
+                mainView.classList.remove('hidden-view');
+                
+                // Trigger reflow
+                void mainView.offsetWidth;
+                
+                // Fade in main view
+                mainView.classList.remove('fade-out');
+                mainView.classList.add('fade-in');
+            }, transitionDuration);
+        }
+    </script>
+</body>
+</html>
